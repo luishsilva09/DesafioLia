@@ -86,7 +86,7 @@ function byCourse(courses, filtro) {
 
   return response;
 }
-
+//filtro para outros dados
 function filterSearch(array, filtro, enums) {
   let response = [];
 
@@ -112,7 +112,7 @@ function filterSearch(array, filtro, enums) {
 
   return response;
 }
-
+//funcao principal de busca
 function search(courses, filtro, levels, times) {
   let response;
   response = byCourse(courses, filtro);
@@ -129,6 +129,9 @@ function search(courses, filtro, levels, times) {
 
   return organizedResponse;
 }
-let filter = ["espanhol", "iniciante"];
 
+//filtro com pavras chave de busca
+let filter = ["avancado", "noite"];
+
+//chamando funcao de busca passando os dados
 console.log(search(courses, filter, _levels, _times));
