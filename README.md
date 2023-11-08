@@ -97,3 +97,8 @@ Cenário vazio, retorna todos os objetos
     Cenário onde passa curso + nível + turno, retorna todos os objetos daquele curso + nivel + turno
     => search(courses, ['espanhol', 'iniciante', 'manha'])
     => [{ id:1 },{ id:2 }]
+
+## Ideias
+
+- Consideraria a utilizção de um banco de dados SQL facilitando a busca e filtragem por um ORM
+-
