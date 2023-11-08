@@ -1,3 +1,4 @@
+//dados do cursos
 const courses = {
   espanhol: {
     iniciante: {
@@ -54,30 +55,31 @@ const courses = {
     },
   },
 };
-let filter = ["avancado"];
-console.time("Tempo de execução ");
 
-const levels = {
+//enums para ter padrao de pesquisa, pode adicionar mais niveis assim que necessario
+const _levels = {
   iniciante: "iniciante",
   avancado: "avancado",
 };
-const times = {
+const _times = {
   manha: "manha",
   noite: "noite",
   tarde: "tarde",
   online: "online",
 };
+
 //filtro pelo curso ou gero um array
 function byCourse(courses, filtro) {
   let response = [];
 
+  //verifico se existe dentro dos dados course algo que relaciona com algum item do filtro
   for (let element of filtro) {
     if (courses[element]) {
       response.push(courses[element]);
       return response;
     }
   }
-  //caso nao tenha um filtro de curso retorna tudo
+  //caso nao tenha um filtro de curso retorna tudo em apenas um array
   for (let curso in courses) {
     response.push(courses[curso]);
   }
@@ -85,11 +87,12 @@ function byCourse(courses, filtro) {
   return response;
 }
 
-function byLevel(array, filtro) {
+function filterSearch(array, filtro, enums) {
   let response = [];
 
   for (let i = 0; i <= filtro.length; i++) {
-    if (levels[filtro[i]]) {
+    if (enums[filtro[i]]) {
+      // verifico se meu filtro esta dentro dos padroes de pesquisa
       for (let level of array) {
         if (level[filtro[i]]) {
           response.push(level[filtro[i]]);
@@ -97,6 +100,7 @@ function byLevel(array, filtro) {
       }
       return response;
     }
+    //caso não tenha nada relacionada do filtro com os itens possiveis do filtro retorno tudo
     if (i == filtro.length) {
       for (let level of array) {
         for (let data in level) {
@@ -109,39 +113,22 @@ function byLevel(array, filtro) {
   return response;
 }
 
-function byTime(array, filtro) {
-  let response = [];
+function search(courses, filtro, levels, times) {
+  let response;
+  response = byCourse(courses, filtro);
+  response = filterSearch(response, filter, levels);
+  response = filterSearch(response, filter, times);
 
-  for (let i = 0; i <= filtro.length; i++) {
-    if (times[filtro[i]]) {
-      for (let time of array) {
-        if (time[filtro[i]]) {
-          response.push(time[filtro[i]]);
-          valid = false;
-        }
-      }
-      return response;
-    }
-    if (i == filtro.length) {
-      for (let time of array) {
-        for (let data in time) {
-          response.push(time[data]);
-        }
-      }
+  //Organizar array para ser como esperado
+  let organizedResponse = [];
+  for (let i = 0; i < response.length; i++) {
+    for (let j = 0; j < response[i].length; j++) {
+      organizedResponse.push(response[i][j]);
     }
   }
 
-  return response;
+  return organizedResponse;
 }
+let filter = ["espanhol", "iniciante"];
 
-function search(courses, filtro) {
-  let response;
-  response = byCourse(courses, filtro);
-  response = byLevel(response, filter);
-  response = byTime(response, filter);
-
-  return response;
-}
-
-console.log(search(courses, filter));
-console.timeEnd("Tempo de execução ");
+console.log(search(courses, filter, _levels, _times));
